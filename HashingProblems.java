@@ -33,15 +33,25 @@ class HashingProblems {
 
     public double getAverage(HashMap<Integer, Integer> map, int[] array) {
 
-        /*
-         * ADD YOUR CODE HERE - DO NOT FORGET TO ADD YOU NAME AT TOP OF FILE
-         *
-         * Note: if NO values found in common between the HashMap and supplied array,
-         * returning 0.0 is NOT correct, as that is not the average value. Whereas
-         * returning 0.0/0.0 IS correct (which would return a non-number).
-         */
+        // Store the sum of values found in the HashMap
+        double sum = 0;
 
-         return 0.0 / 0.0;
+        // Tracks how many matching keys were found
+        int count = 0;
+
+        // Iterate through the array and check if the key exists in the HashMap
+        for (int key : array) {
+            if (map.containsKey(key)) {
+                sum += map.get(key);
+                count++;
+            }
+        }
+
+        // If no matching keys were found, return NaN otherwise, return the average
+        if (count == 0) {
+            return 0.0 / 0.0;
+        }
+        return sum / count;
   }
 
 
@@ -53,7 +63,6 @@ class HashingProblems {
      */
 
   public ArrayList<String> odd(HashMap<Integer, String> map) {
-    
       ArrayList<String> result = new ArrayList<>();
 
       /*
