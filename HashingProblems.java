@@ -63,15 +63,18 @@ class HashingProblems {
      */
 
   public ArrayList<String> odd(HashMap<Integer, String> map) {
+      // Initialize an ArrayList to store the values corresponding to odd keys
       ArrayList<String> result = new ArrayList<>();
 
-      /*
-       * ADD YOUR CODE HERE
-       *
-       * Hint: Consider iterating over the HashMap using the keySet method.
-       */
-
-
+      // Iterate over the HashMap using keySet() to get all the keys
+      for (Integer key : map.keySet()) {
+          // Check if the key is odd
+          if (key % 2 != 0) {
+              // If the key is odd, add its value to the result list
+              result.add(map.get(key));
+          }
+      }
+      // Return the result list containing values of odd keys
       return result;
   }
 
@@ -114,12 +117,25 @@ class HashingProblems {
    */
 
   public int twoSums(int[] numbers, int k) {
+      // HashSet to store previously checked numbers
+      HashSet<Integer> checkedNumbers = new HashSet<>();
 
-      /*
-       * ADD YOUR CODE HERE
-       */
+      // Variable to count the number of times the difference equals k
+      int count = 0;
 
-      return -1;
+      // Iterate through the numbers in the array
+      for (int num : numbers) {
+          // Check if the pair (num - k) exists in the HashSet
+          if(checkedNumbers.contains((num - k))) {
+              count++;
+          }
+
+          // Add the current number to the HashSet
+          checkedNumbers.add(num);
+      }
+
+      // Return the total count of pairs with difference k
+      return count;
   }
 
 } /* end class HashingProblems */

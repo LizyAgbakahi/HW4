@@ -220,17 +220,38 @@ class myHashMap<K,V> {
      */
 
     public V remove(K key) {
+        // Calculate the index of the bucket where the key should be located
+        int index = getBucketIndex(key);
 
-        /*
-         * ADD YOUR CODE HERE
-         *
-         * Review the code in the whole object to understand teh data structures layout.
-         * Additionally, review the method put() for inserting a new Key / Value pair into
-         * the HashMap. This method will do the opposite by removing an element. Do see
-         * the return value discussion in this method's prologue to make sure the correct
-         * return value is returned the invoking function based on the remove outcome.
-         */
+        // Get the head node of the linked list at that bucket index
+        HashNode<K, V> head = bucket.get(index);
+        HashNode<K, V> prev = null;
 
+        // Traverse the linked list in the selected bucket to find the key
+        while (head != null) {
+            // If the key matches the current node's key, remove the node
+            if (head.key.equals(key)) {
+                // If it's the first node, move head to the next node
+                if (prev == null) {
+                    bucket.set(index, head.next);
+                } else {
+                    // If the node is not the first, bypass the current node
+                    prev.next = head.next;
+                }
+
+                // Decrease the size of the hash map as an entry was removed
+                size--;
+
+                // Return the value of the removed node
+                return head.value;
+            }
+
+            // Move to the next node in the linked list
+            prev = head;
+            head = head.next;
+        }
+
+        // If the key is not found, return null to indicate no removal occurred
         return null;
     }
 
@@ -398,15 +419,26 @@ class myHashMap<K,V> {
      */
 
     public V replace(K key, V val) {
+        // Calculate the index of the bucket where the key should be located
+        int index = getBucketIndex(key);
 
-        /*
-         * ADD YOUR CODE HERE - DO NOT FORGET TO ADD YOUR NAME AT TOP OF FILE
-         *
-         * Make sure you return the proper value based on the outcome of this method's
-         * replace (see method's prologue above).
-         */
+        // Get the head node of the linked list in that bucket
+        HashNode<K, V> head = bucket.get(index);
 
-        return val;
+        // Traverse the linked list to search for the key
+        while (head != null) {
+            // If the key is found, replace the value and return the old value
+            if (head.key.equals(key)) {
+                V oldValue = head.value;
+                head.value = val;
+                return oldValue;
+            }
+            // Move to the next node in the linked list
+            head = head.next;
+        }
+
+        // If the key is not found, return null
+        return null;
     }
 
     
@@ -426,14 +458,25 @@ class myHashMap<K,V> {
      */
 
     public boolean replace(K key, V oldVal, V newVal) {
+        // Calculate the bucket index using the key
+        int index = getBucketIndex(key);
 
-        /*
-         * ADD YOUR CODE HERE
-         *
-         * This method should apply the precondition (aka, the Key already exists with the
-         * value 'oldval', and is so, it SHOULD call replace(K, V) for code reuse.
-         */
+        // Get the head node of the linked list in the corresponding bucket
+        HashNode<K, V> head = bucket.get(index);
 
+        // Traverse the linked list to search for the key
+        while (head != null) {
+            // If the key is found and the current value matches oldVal
+            if (head.key.equals(key) && head.value.equals(oldVal)) {
+                // Replace the old value with the new value
+                head.value = newVal;
+                return true; // Return true to indicate that the value was replaced
+            }
+            // Move to the next node in the linked list
+            head = head.next;
+        }
+
+        // If the key is not found or the value doesn't match, return false
         return false;
     }
 
